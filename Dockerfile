@@ -47,7 +47,7 @@ ENV LANG ru_RU.UTF-8
 ENV LANGUAGE ru_RU.UTF-8
 
 RUN mkdir -p /app
-ADD ./ /app
+#ADD ./ /app
 
 WORKDIR /app
 
