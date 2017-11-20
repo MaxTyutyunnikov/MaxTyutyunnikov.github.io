@@ -28,9 +28,23 @@ RUN gem install jekyll -v 3.1.6 && \
     gem install jekyll-mentions -v 1.1.2 && \
     gem install jekyll-redirect-from -v 0.10.0 && \
     gem install jemoji -v 0.6.2 && \
-    gem install github-pages -v 82 && \
+    gem install github-pages -v 82
 
+# Install program to configure locales
+RUN apt-get update && apt-get install -y locales
 
+RUN dpkg-reconfigure locales && \
+    locale-gen C.UTF-8 && \
+    /usr/sbin/update-locale LANG=C.UTF-8
+
+# Install needed default locale for Makefly
+RUN echo 'ru_RU.UTF-8 UTF-8' >> /etc/locale.gen && \
+    locale-gen
+
+# Set default locale for the environment
+ENV LC_ALL C.UTF-8
+ENV LANG ru_RU.UTF-8
+ENV LANGUAGE ru_RU.UTF-8
 
 RUN mkdir -p /app
 ADD ./ /app
