@@ -13,7 +13,7 @@ site:
 
 push: site
 	git add .
-	git commit -a -m "Update Site"
+	git commit -a -m "Update Site"  || true
 	git push --all
 
 clean:
