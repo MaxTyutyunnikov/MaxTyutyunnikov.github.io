@@ -10,3 +10,13 @@ run:
 
 site:
 	docker run -it -p 4000:4000 -v `pwd`:/app blog bash -c "bundle exec jekyll build"
+
+push: site
+	git add .
+	git commit -a -m "Update Site"
+	git push --all
+
+clean:
+	# I always forget the syntax
+	[ "`docker ps -a -q -f status=exited`" != "" ] && docker rm `docker ps -a -q -f status=exited` || exit 0
+	[ "`docker images -a -q -f dangling=true`" != "" ] && docker rmi `docker images -a -q -f dangling=true` || exit 0
