@@ -38,8 +38,7 @@ RUN dpkg-reconfigure locales && \
     /usr/sbin/update-locale LANG=C.UTF-8
 
 # Install needed default locale for Makefly
-RUN echo 'ru_RU.UTF-8 UTF-8' >> /etc/locale.gen && \
-    locale-gen
+RUN echo 'ru_RU.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen
 
 # Set default locale for the environment
 ENV LC_ALL C.UTF-8
@@ -47,10 +46,12 @@ ENV LANG ru_RU.UTF-8
 ENV LANGUAGE ru_RU.UTF-8
 
 RUN mkdir -p /app
-#ADD ./ /app
+ADD ./ /app
 
 WORKDIR /app
 
 EXPOSE 4000
+
+RUN bundle install
 
 CMD bundle exec jekyll serve
