@@ -31,7 +31,7 @@ RUN gem install jekyll -v 3.1.6 && \
     gem install github-pages -v 82
 
 # Install program to configure locales
-RUN apt-get update && apt-get install -y locales
+RUN apt-get update && apt-get install -y locales sudo
 
 RUN dpkg-reconfigure locales && \
     locale-gen C.UTF-8 && \
@@ -45,7 +45,14 @@ ENV LC_ALL C.UTF-8
 ENV LANG ru_RU.UTF-8
 ENV LANGUAGE ru_RU.UTF-8
 
-RUN mkdir -p /app
+RUN mkdir -p /app && \
+    echo "app:x:1000:1000:app,,,:/app:/bin/sh" >> /etc/passwd && \
+    echo "app:x:1000:" >> /etc/group && \
+    echo "app ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/app && \
+    chmod 0440 /etc/sudoers.d/app && \
+    chown app:app -R /app && \
+    chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
+
 ADD ./ /app
 
 WORKDIR /app
@@ -53,5 +60,8 @@ WORKDIR /app
 EXPOSE 4000
 
 RUN bundle install
+
+USER app
+ENV HOME /app
 
 CMD bundle exec jekyll serve
