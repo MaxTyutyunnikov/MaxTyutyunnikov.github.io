@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+BLOG=blog
 
 .PHONY: help
 
@@ -12,13 +13,16 @@ all: push
 	@echo push
 
 build: ## Собрать докер
-	@docker build . --squash -t blog
+	@docker build . --squash -t ${BLOG}
+
+run_it: ## Запустить локальный сайт
+	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000"
 
 run: ## Запустить локальный сайт
-	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name blog blog bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000"
+	@docker run --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000"
 
 site: ## Сайт
-	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name blog blog bash -c "bundle exec jekyll build"
+	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll build"
 
 push: site ## Залить на github
 	@git add .

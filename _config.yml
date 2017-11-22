@@ -1,5 +1,8 @@
 # --- General options --- #
 
+name: Max Tyutyunnikov
+bio: bio
+
 # url is the full website URL
 # baseurl is the website's URL without the hostname
 
@@ -19,12 +22,15 @@ title: Max Tyutyunnikov
 # Short description of your site
 description: A virtual proof that name is awesome!
 
+language: "ru"
+
 # --- Navigation bar options --- #
 
 # List of links in the navigation bar
 navbar-links:
   About Me: "aboutme"
   Links: "links"
+  Blog: "blog/"
   Resources:
     - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
     - Learn markdown: "http://www.markdowntutorial.com/"
@@ -134,7 +140,10 @@ title-separator: "-"
 timezone: "Europe/Moscow"
 markdown: kramdown
 highlighter: rouge
-permalink: /:year-:month-:day-:title/
+#permalink: /:year-:month-:day-:title/
+permalink: /blog/:title/
+
+paginate_path: "/blog/page:num/"
 paginate: 5
 
 kramdown:
@@ -152,6 +161,11 @@ defaults:
       social-share: true # add social media sharing buttons to all blog posts
   -
     scope:
+      path: "blog/"
+    values:
+      sitemap: false
+  -
+    scope:
       path: "" # all files
     values:
       layout: "page"
@@ -159,6 +173,9 @@ defaults:
 
 # Use tags pages (not recommended if you are deploying via GitHub pages, only set to true if deploying locally with ruby)
 link-tags: false
+
+include:
+  - "_pages"
 
 # Exclude these files from production site
 exclude:
@@ -227,6 +244,10 @@ prose:
 plugins:
   - jekyll-paginate
   - jekyll-admin
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189

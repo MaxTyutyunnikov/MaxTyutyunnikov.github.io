@@ -242,7 +242,11 @@ PLATFORMS
 DEPENDENCIES
   github-pages (= 163)
   jekyll-admin
+  jekyll-feed
+  jekyll-mentions
   jekyll-paginate
+  jekyll-redirect-from
+  jekyll-sitemap
 
 BUNDLED WITH
    1.16.0
