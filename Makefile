@@ -15,11 +15,11 @@ all: push
 build: ## Собрать докер
 	@docker build . --squash -t ${BLOG}
 
-run_it: ## Запустить локальный сайт
-	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000"
-
 run: ## Запустить локальный сайт
 	@docker run --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000"
+
+run_dr: ## Запустить локальный сайт
+	@docker run --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll serve --host 0.0.0.0 --port 4000 --drafts"
 
 site: ## Сайт
 	@docker run -it --rm -p 4000:4000 -v `pwd`:/app --name ${BLOG} ${BLOG} bash -c "bundle exec jekyll build"
